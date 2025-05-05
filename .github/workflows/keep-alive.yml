@@ -1,0 +1,22 @@
+name: 🟢 Keep Contribution Alive
+
+on:
+  schedule:
+    - cron: "0 1 * * *"  # UTC+0 tw 09:00
+  workflow_dispatch:
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout self
+        uses: actions/checkout@v4
+
+      - name: Create empty commit
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git commit --allow-empty -m "🌱 Keep contribution graph alive"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
